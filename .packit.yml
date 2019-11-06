@@ -8,7 +8,8 @@ jobs:
 - job: copr_build
   trigger: pull_request
   metadata:
-  - fedora-rawhide-x86_64
-  - fedora-31-x86_64
-  - fedora-30-x86_64
-  - fedora-29-x86_64
+    targets:
+    - fedora-rawhide-x86_64
+    - fedora-31-x86_64
+    - fedora-30-x86_64
+    - fedora-29-x86_64
