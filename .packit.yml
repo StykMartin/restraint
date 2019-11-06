@@ -5,7 +5,7 @@ upstream_package_name: restraint
 
 actions:
   create-archive:
-    - tito build --tgz --test -o . | tail -1 | awk -F'/' '{print $NF}'
+  - make packit-srpm
 
 # for packit service
 jobs:

@@ -21,3 +21,6 @@ valgrind:
 .PHONY: clean
 clean:
 	set -e; for i in $(SUBDIRS); do $(MAKE) -C $$i clean; done
+
+packit-srpm:
+	tito build --tgz --test -o . | tail -1 | awk -F'/' '{print $$NF}'
