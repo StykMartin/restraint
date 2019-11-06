@@ -5,7 +5,7 @@ upstream_package_name: restraint
 
 actions:
   create-archive:
-  - make packit-srpm
+  - make packit-tgz
 
 # for packit service
 jobs:
