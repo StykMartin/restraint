@@ -1,9 +1,10 @@
 # https://packit.dev/docs/configuration/
 
 specfile_path: restraint.spec
-upstream_project_name: restraint
+upstream_package_name: restraint
 
 # for packit service
+jobs:
 - job: copr_build
   trigger: pull_request
   metadata:
