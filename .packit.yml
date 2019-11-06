@@ -2,6 +2,7 @@
 
 specfile_path: restraint.spec
 upstream_package_name: restraint
+create_tarball_command: ["tito", "build", "--tgz", "--test"]
 
 # for packit service
 jobs:
