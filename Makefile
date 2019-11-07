@@ -23,5 +23,6 @@ clean:
 	set -e; for i in $(SUBDIRS); do $(MAKE) -C $$i clean; done
 
 packit-tgz:
-	TGZ=$$(tito build --tgz --test -o . | tail -1 | awk -F'/' '{print $$NF}'); \
+	@TGZ=$$(tito build --tgz --test -o . | tail -1 | awk -F'/' '{print $$NF}'); \
+	cp ./third-party/*tar* .;\
 	echo $$TGZ
