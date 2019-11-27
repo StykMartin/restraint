@@ -21,20 +21,20 @@ Source0:	https://github.com/beaker-project/%{name}/%{name}-%{version}.tar.gz
 
 %if 0%{?with_static:1}
 # Sources for bundled, statically linked libraries
-Source101:      libffi-3.1.tar.gz
-Source102:      glib-2.56.1.tar.xz
-Source103:      zlib-1.2.11.tar.gz
-Source104:      bzip2-1.0.6.tar.gz
-Source105:      libxml2-2.9.1.tar.gz
-Source106:      curl-7.29.0.tar.bz2
-Source107:      libarchive-3.2.1.tar.gz
-Source108:      xz-5.2.2.tar.gz
-Source109:      sqlite-autoconf-3080002.tar.gz
-Source110:      intltool-0.51.0.tar.gz
-Source111:      libsoup-2.48.1.tar.xz
-Source112:      libssh-0.7.3.tar.xz
-Source113:      cmake-3.2.3.tar.gz
-Source114:      openssl-1.0.1m.tar.gz
+Source101:      http://mirrors.kernel.org/sourceware/libffi/libffi-3.1.tar.gz
+Source102:      https://ftp.gnome.org/pub/gnome/sources/glib/2.56/glib-2.56.1.tar.xz
+Source103:      http://zlib.net/zlib-1.2.11.tar.gz
+Source104:      http://downloads.sourceforge.net/project/bzip2/bzip2-1.0.6.tar.gz
+Source105:      http://xmlsoft.org/sources/libxml2-2.9.1.tar.gz
+Source106:      https://curl.haxx.se/download/curl-7.29.0.tar.bz2
+Source107:      http://libarchive.org/downloads/libarchive-3.2.1.tar.gz
+Source108:      http://downloads.sourceforge.net/project/lzmautils/xz-5.2.2.tar.gz
+Source109:      http://sqlite.org/2013/sqlite-autoconf-3080002.tar.gz
+Source110:      https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz
+Source111:      http://ftp.gnome.org/pub/GNOME/sources/libsoup/2.48/libsoup-2.48.1.tar.xz
+Source112:      https://git.libssh.org/projects/libssh.git/snapshot/libssh-0.7.3.tar.xz
+Source113:      http://www.cmake.org/files/v3.2/cmake-3.2.3.tar.gz
+Source114:      https://www.openssl.org/source/openssl-1.0.1m.tar.gz
 %endif
 
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
@@ -210,15 +210,15 @@ mkdir -p $RPM_BUILD_ROOT/mnt/scratchspace
 mkdir -p $RPM_BUILD_ROOT/mnt/testarea
 
 %if 0%{?rhel}%{?fedora} > 4
-# Build RHTS Selinux Testing Policy 
+# Build RHTS Selinux Testing Policy
 pushd legacy/selinux
 # If dist specific selinux module is present use that.
 # Why:
 #  newer releases may introduce new selinux macros which are not present in
 #  older releases.  This means that a module built under the newer release
-#  will no longer load on an older release.  
+#  will no longer load on an older release.
 # How:
-#  Simply issue the else statement on the older release and commit the 
+#  Simply issue the else statement on the older release and commit the
 #  policy to git with the appropriate dist tag.
 if [ -e "rhts%{?dist}.pp" ]; then
     install -p -m 644 -D rhts%{?dist}.pp $RPM_BUILD_ROOT%{_datadir}/selinux/packages/%{name}/rhts.pp
