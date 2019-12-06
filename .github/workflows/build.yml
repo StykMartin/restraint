@@ -1,0 +1,25 @@
+name: Build restraint
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: build restraint
+      run: |
+        dnf install 'dnf-command(builddep)' -y
+        dnf install patch -y
+        dnf install tar -y
+        dnf install bzip2 -y
+        dnf builddep restraint.spec -y
+        pushd third-party
+        make
+        popd
+        pushd src
+        PKG_CONFIG_PATH=../third-party/tree/lib/pkgconfig make STATIC=1
+        popd
