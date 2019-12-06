@@ -12,6 +12,8 @@ jobs:
     - uses: actions/checkout@v1
     - name: build restraint
       run: |
+        echo $PWD
+        ls -la
         dnf install 'dnf-command(builddep)' -y
         dnf install patch -y
         dnf install tar -y
