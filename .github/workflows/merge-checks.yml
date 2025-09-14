@@ -20,19 +20,41 @@ jobs:
     - uses: actions/checkout@v3
     - name: Install deps
       run: |
-        dnf install -y 'dnf-command(builddep)' git-daemon python3-flask python3-requests python3-pytest python3-six procps-ng
+        dnf install -y 'dnf-command(builddep)' git-daemon python3-flask python3-requests python3-pytest python3-six procps-ng lcov
     - name: Install restraint deps
       run: |
         dnf builddep --spec specfiles/restraint-upstream.spec -y
+    - name: Build
+      run: |
+        make clean
+        make
+    - name: Build tests with coverage
+      run: |
+        cd tests
+        make clean
+        make COVERAGE=1
     - name: Run tests
       run: |
+        cd tests
+        export PKG_CONFIG_PATH="/usr/lib64/pkgconfig:$PKG_CONFIG_PATH"
         set -o pipefail
         make check | tee unittests.out
         mv unittests.out /__w/unittests.out
+    - name: Generate coverage report
+      run: |
+        cd tests
+        find . -name "*.gcda" -exec gcov {} \;
+        lcov --capture --directory . --output-file coverage.info
+        lcov --remove coverage.info '/usr/*' '*/tests/*' '*/test-*' --output-file coverage.info
+        lcov --summary coverage.info
     - uses: actions/upload-artifact@v4
       with:
         name: unittests-${{ matrix.version }}.out
         path: /home/runner/work/unittests.out
+    - uses: actions/upload-artifact@v4
+      with:
+        name: coverage-${{ matrix.version }}
+        path: tests/coverage.info
 
   valgrind:
     strategy:
